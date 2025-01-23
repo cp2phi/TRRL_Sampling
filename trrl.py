@@ -467,21 +467,21 @@ class TRRL(algo_base.DemonstrationAlgorithm[types.Transitions]):
             # adaptive coef adjustment paremeters
             # if avg_diff_coef (+) too high, reduce its coef
             if avg_reward_diff > self.target_reward_diff * 1.5:
-                self.avg_diff_coef = self.avg_diff_coef / 2
+                self.avg_diff_coef = self.avg_diff_coef / 2.5
             elif avg_reward_diff < self.target_reward_diff / 1.5:
-                self.avg_diff_coef = self.avg_diff_coef * 2
+                self.avg_diff_coef = self.avg_diff_coef * 2.5
 
             self.avg_diff_coef = torch.tensor(self.avg_diff_coef)
-            self.avg_diff_coef = torch.clamp(self.avg_diff_coef, min=1e-3, max=1e2)
+            self.avg_diff_coef = torch.clamp(self.avg_diff_coef, min=1e-3, max=1e3)
 
             # if l2_norm_reward_diff (-) too high, increase its coef
             if l2_norm_reward_diff > self.target_reward_l2_norm:
-                self.l2_norm_coef = self.l2_norm_coef * 1.2
+                self.l2_norm_coef = self.l2_norm_coef * 2
             elif l2_norm_reward_diff < self.target_reward_l2_norm:
-                self.l2_norm_coef = self.l2_norm_coef / 1.2
+                self.l2_norm_coef = self.l2_norm_coef / 2
 
             self.l2_norm_coef = torch.tensor(self.l2_norm_coef)
-            self.l2_norm_coef = torch.clamp(self.l2_norm_coef, min=1e-3, max=1e2)
+            self.l2_norm_coef = torch.clamp(self.l2_norm_coef, min=1e-3, max=1e3)
 
             # loss backward
             loss = - avg_advantages + self.avg_diff_coef * avg_reward_diff + self.l2_norm_coef * l2_norm_reward_diff

@@ -19,6 +19,7 @@ import gymnasium as gym
 from reward_function import BasicRewardNet
 from trrl import TRRL
 from imitation.data import rollout
+from stable_baselines3.common.rollout import RolloutBuffer
 
 from typing import (
     List,
