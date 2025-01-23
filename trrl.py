@@ -382,28 +382,28 @@ class TRRL(algo_base.DemonstrationAlgorithm[types.Transitions]):
 
         _ = venv_with_cur_rwd_net.reset()
 
-        # new_policy = PPO(
-        #     policy=MlpPolicy,
-        #     env=venv_with_cur_rwd_net,
-        #     learning_rate=0.0005,
-        #     n_epochs=5,
-        #     gamma=self.discount,
-        #     verbose=0,
-        #     device='cpu'
-        # )
-
         new_policy = PPO(
-            env=venv_with_cur_rwd_net,
             policy=MlpPolicy,
-            ent_coef=0.01,
-            learning_rate=0.0001,
-            gamma=0.99,
-            n_epochs=20,
-            n_steps=128,
-            seed=0,
+            env=venv_with_cur_rwd_net,
+            learning_rate=0.0005,
+            n_epochs=5,
+            gamma=self.discount,
             verbose=0,
             device='cpu'
         )
+
+        # new_policy = PPO(
+        #     env=venv_with_cur_rwd_net,
+        #     policy=MlpPolicy,
+        #     ent_coef=0.01,
+        #     learning_rate=0.0001,
+        #     gamma=0.99,
+        #     n_epochs=20,
+        #     n_steps=128,
+        #     seed=0,
+        #     verbose=0,
+        #     device='cpu'
+        # )
 
         new_policy.learn(self.n_policy_updates_per_round)
 
